@@ -1,0 +1,13 @@
+﻿{
+	"ManifestVersion": 2,
+	"Name": "FakeMichau-BossLootIntoInventory",
+	"DisplayName": "BossLootIntoInventory",
+	"Version": "1.0.0",
+	"AuthorName": "FakeMichau",
+	"WebsiteURL": "",
+	"Description": "No more stealing boss loot",
+	"Dependencies": [
+		"bbepis-BepInExPack-5.4.9",
+		"tristanmcpherson-R2API-4.0.11"
+	]
+}
