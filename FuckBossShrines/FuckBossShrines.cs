@@ -1,6 +1,7 @@
 ﻿using BepInEx;
 using R2API.Utils;
 using RoR2;
+using UnityEngine;
 
 namespace FuckBossShrines
 {
@@ -18,7 +19,7 @@ namespace FuckBossShrines
         public void Awake()
         {
             ModConfig.InitConfig(Config);
-            On.RoR2.ShrineBossBehavior.AddShrineStack += ShrineBossBehavior_AddShrineStack;
+            On.RoR2.Stage.Start += Stage_Start;
 
             if (RiskOfOptionsCompat.Enabled)
             {
@@ -26,16 +27,9 @@ namespace FuckBossShrines
             }
         }
 
-        private void ShrineBossBehavior_AddShrineStack(On.RoR2.ShrineBossBehavior.orig_AddShrineStack orig, ShrineBossBehavior self, Interactor interactor)
+        private void Stage_Start(On.RoR2.Stage.orig_Start orig, Stage self)
         {
-            if (!ModConfig.DisableMod.Value)
-            {
-                ChatMessage.Send(ModConfig.Message.Value);
-            }
-            else
-            {
-                orig(self, interactor);
-            }
+            orig(self);
         }
     }
 }

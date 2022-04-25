@@ -1,5 +1,6 @@
 ﻿using BepInEx.Bootstrap;
 using RiskOfOptions;
+using RiskOfOptions.OptionConfigs;
 using RiskOfOptions.Options;
 
 namespace FuckBossShrines
@@ -19,8 +20,7 @@ namespace FuckBossShrines
 
         public static void AddOptions()
         {
-            ModSettingsManager.AddOption(new CheckBoxOption(ModConfig.DisableMod));
-            ModSettingsManager.AddOption(new StringInputFieldOption(ModConfig.Message));
+            ModSettingsManager.AddOption(new CheckBoxOption(ModConfig.DisableShrines));
 
             //ModSettingsManager.SetModDescription("");
         }

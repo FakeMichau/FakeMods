@@ -328,3 +328,7 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+*.zip
+/_StagingArea/FuckBossShrines/FuckBossShrines.dll
+/_StagingArea/CheatersGoBrr/CheatersGoBrr.dll
+/_StagingArea/BetterBossLootDropping/BetterBossLootDropping.dll

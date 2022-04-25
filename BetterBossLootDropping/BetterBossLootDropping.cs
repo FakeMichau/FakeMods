@@ -3,20 +3,21 @@ using R2API.Utils;
 using RoR2;
 using System.Collections.Generic;
 using System.Linq;
+using BossLootIntoInventory;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace BossLootIntoInventory
+namespace BetterBossLootDropping
 {
     [BepInDependency(R2API.R2API.PluginGUID)]
     [BepInDependency("com.rune580.riskofoptions", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInPlugin(PluginGUID, PluginName, PluginVersion)]
     [NetworkCompatibility(CompatibilityLevel.NoNeedForSync, VersionStrictness.DifferentModVersionsAreOk)]
-    public class BossLootIntoInventory : BaseUnityPlugin
+    public class BetterBossLootDropping : BaseUnityPlugin
     {
         public const string PluginGUID = PluginAuthor + "." + PluginName;
         public const string PluginAuthor = "FakeMichau";
-        public const string PluginName = "BossLootIntoInventory";
+        public const string PluginName = "BetterBossLootDropping";
         public const string PluginVersion = "1.0.0";
 
         public void Awake()
@@ -105,10 +106,15 @@ namespace BossLootIntoInventory
                         pickupIndex2 = self.rng.NextElementUniform<PickupIndex>(self.bossDrops);
                     }
                 }
-                if (ModConfig.DropRedItems.Value && SceneManager.GetActiveScene().name.ToLower() == "shipgraveyard" && self.name.StartsWith("SuperRoboBallEncounter"))
+                if (ModConfig.DropRedItems.Value && SceneManager.GetActiveScene().name.ToLower() == "shipgraveyard" && self.name.StartsWith("SuperRoboBallEncounter") && !ModConfig.DelayedDrop.Value)
                 {
                     PickupDropletController.CreatePickupDroplet(pickupIndex2, self.dropPosition.position, vector);
                     vector = rotation * vector;
+                } 
+                else if (ModConfig.DelayedDrop.Value)
+                {
+                    vector = rotation * vector;
+                    StartCoroutine(Utils.DelayedDrop(pickupIndex2, self.dropPosition.position, vector, ModConfig.DelayLength.Value * i));
                 }
                 else
                 {
