@@ -68,7 +68,6 @@ namespace BetterBossLootDropping
                 num *= livingPlayerCount;
             }
 
-            // needed to drop red items
             float angle = 360f / num;
             Vector3 vector = Quaternion.AngleAxis(UnityEngine.Random.Range(0, 360), Vector3.up) * (Vector3.up * 40f + Vector3.forward * 5f);
             Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
@@ -95,42 +94,41 @@ namespace BetterBossLootDropping
                 PickupIndex pickupIndex2 = pickupIndex;
                 if ((self.bossDrops.Count > 0 || self.bossDropTables.Count > 0) && self.rng.nextNormalizedFloat <= self.bossDropChance)
                 {
-                    if (self.bossDropTables.Count > 0)
+                    pickupIndex2 = self.bossDropTables.Count > 0 ? self.rng.NextElementUniform<PickupDropTable>(self.bossDropTables).GenerateDrop(self.rng) : self.rng.NextElementUniform<PickupIndex>(self.bossDrops);
+                }
+
+                if (ModConfig.LootIntoInventory.Value)
+                {
+                    if (ModConfig.DropRedItems.Value &&
+                        SceneManager.GetActiveScene().name.ToLower() == "shipgraveyard" &&
+                        self.name.StartsWith("SuperRoboBallEncounter"))
                     {
-                        pickupIndex2 = self.rng.NextElementUniform<PickupDropTable>(self.bossDropTables).GenerateDrop(self.rng);
+                        PickupDropletController.CreatePickupDroplet(pickupIndex2, self.dropPosition.position, vector);
+                        vector = rotation * vector;
                     }
                     else
                     {
-                        pickupIndex2 = self.rng.NextElementUniform<PickupIndex>(self.bossDrops);
+                        if (pickupIndex2.pickupDef.isLunar && !ModConfig.LunarIntoInventory.Value)
+                        {
+                            PickupDropletController.CreatePickupDroplet(
+                                pickupIndex2,
+                                shuffledLivingPlayersList[counter].master.GetBodyObject().transform.position,
+                                new Vector3(self.rng.nextNormalizedFloat, self.rng.nextNormalizedFloat, self.rng.nextNormalizedFloat
+                                ));
+                        }
+                        else
+                        {
+                            shuffledLivingPlayersList[counter].master.inventory.GiveItem(pickupIndex2.pickupDef.itemIndex);
+                            GenericPickupController.SendPickupMessage(shuffledLivingPlayersList[counter].master, pickupIndex2);
+                        }
+                        counter++;
+                        if (counter >= shuffledLivingPlayersList.Count) counter = 0;
                     }
-                }
-                if (ModConfig.DropRedItems.Value && SceneManager.GetActiveScene().name.ToLower() == "shipgraveyard" && self.name.StartsWith("SuperRoboBallEncounter") && !ModConfig.DelayedDrop.Value)
-                {
-                    PickupDropletController.CreatePickupDroplet(pickupIndex2, self.dropPosition.position, vector);
-                    vector = rotation * vector;
-                } 
-                else if (ModConfig.DelayedDrop.Value)
-                {
-                    vector = rotation * vector;
-                    StartCoroutine(Utils.DelayedDrop(pickupIndex2, self.dropPosition.position, vector, ModConfig.DelayLength.Value * i));
                 }
                 else
                 {
-                    if (pickupIndex2.pickupDef.isLunar && !ModConfig.LunarIntoInventory.Value)
-                    {
-                        PickupDropletController.CreatePickupDroplet(
-                            pickupIndex2, 
-                            shuffledLivingPlayersList[counter].master.GetBodyObject().transform.position, 
-                            new Vector3(self.rng.nextNormalizedFloat, self.rng.nextNormalizedFloat, self.rng.nextNormalizedFloat
-                            ));
-                    }
-                    else
-                    {
-                        shuffledLivingPlayersList[counter].master.inventory.GiveItem(pickupIndex2.pickupDef.itemIndex);
-                        GenericPickupController.SendPickupMessage(shuffledLivingPlayersList[counter].master, pickupIndex2);
-                    }
-                    counter++;
-                    if (counter >= shuffledLivingPlayersList.Count) counter = 0;
+                    StartCoroutine(Utils.DelayedDrop(pickupIndex2, self.dropPosition.position, vector, ModConfig.DelayLength.Value * i));
+                    vector = rotation * vector;
                 }
             }
         }

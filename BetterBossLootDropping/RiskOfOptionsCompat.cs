@@ -24,19 +24,18 @@ namespace BetterBossLootDropping
             ModSettingsManager.AddOption(new CheckBoxOption(ModConfig.DisableInSingle, new CheckBoxConfig { checkIfDisabled = CheckMod }));
             ModSettingsManager.AddOption(new CheckBoxOption(ModConfig.RoundDownItems, new CheckBoxConfig { checkIfDisabled = CheckMod }));
 
-            ModSettingsManager.AddOption(new CheckBoxOption(ModConfig.DisableLII, new CheckBoxConfig { checkIfDisabled = CheckDrop }));
-            ModSettingsManager.AddOption(new CheckBoxOption(ModConfig.LunarIntoInventory, new CheckBoxConfig { checkIfDisabled = CheckDrop }));
-            ModSettingsManager.AddOption(new CheckBoxOption(ModConfig.DropRedItems, new CheckBoxConfig { checkIfDisabled = CheckDrop }));
+            ModSettingsManager.AddOption(new CheckBoxOption(ModConfig.LootIntoInventory, new CheckBoxConfig { checkIfDisabled = CheckMod }));
+            ModSettingsManager.AddOption(new CheckBoxOption(ModConfig.LunarIntoInventory, new CheckBoxConfig { checkIfDisabled = CheckLII }));
+            ModSettingsManager.AddOption(new CheckBoxOption(ModConfig.DropRedItems, new CheckBoxConfig { checkIfDisabled = CheckLII }));
 
-            ModSettingsManager.AddOption(new CheckBoxOption(ModConfig.DelayedDrop, new CheckBoxConfig { checkIfDisabled = CheckLII }));
-            ModSettingsManager.AddOption(new StepSliderOption(ModConfig.DelayLength, new StepSliderConfig{ min = 0, max = 1, increment = (float)0.05, checkIfDisabled = CheckLII }));
+            ModSettingsManager.AddOption(new StepSliderOption(ModConfig.DelayLength, new StepSliderConfig{ min = 0, max = 1, increment = (float)0.05, checkIfDisabled = CheckDrop }));
 
             ModSettingsManager.SetModDescription("Enhanced way of getting boss loot.");
         }
 
         private static bool CheckDrop()
         {
-            return ModConfig.DisableMod.Value || ModConfig.DelayedDrop.Value;
+            return ModConfig.DisableMod.Value || ModConfig.LootIntoInventory.Value;
         }
         private static bool CheckMod()
         {
@@ -44,7 +43,7 @@ namespace BetterBossLootDropping
         }
         private static bool CheckLII()
         {
-            return ModConfig.DisableMod.Value || ModConfig.DisableLII.Value;
+            return ModConfig.DisableMod.Value || !ModConfig.LootIntoInventory.Value;
         }
     }
 }
