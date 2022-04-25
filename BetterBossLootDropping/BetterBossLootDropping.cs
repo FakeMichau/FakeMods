@@ -3,7 +3,6 @@ using R2API.Utils;
 using RoR2;
 using System.Collections.Generic;
 using System.Linq;
-using BossLootIntoInventory;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -24,7 +23,6 @@ namespace BetterBossLootDropping
         {
             ModConfig.InitConfig(Config);
             On.RoR2.BossGroup.DropRewards += BossGroup_DropRewards;
-            CommandHelper.AddToConsoleWhenReady();
 
             if (RiskOfOptionsCompat.Enabled)
             {
@@ -34,7 +32,7 @@ namespace BetterBossLootDropping
 
         private void BossGroup_DropRewards(On.RoR2.BossGroup.orig_DropRewards orig, BossGroup self) {
             ArtifactDef artifactDef = ArtifactCatalog.FindArtifactDef("Command");
-            if (RunArtifactManager.instance.IsArtifactEnabled(artifactDef) || (RoR2Application.isInSinglePlayer && ModConfig.DisableInSingle.Value) || Commands.DisableMod || ModConfig.DisableMod.Value)
+            if (RunArtifactManager.instance.IsArtifactEnabled(artifactDef) || (RoR2Application.isInSinglePlayer && ModConfig.DisableInSingle.Value) || ModConfig.DisableMod.Value)
             {
                 orig(self);
                 return;
