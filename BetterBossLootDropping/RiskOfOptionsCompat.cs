@@ -23,21 +23,28 @@ namespace BetterBossLootDropping
             ModSettingsManager.AddOption(new CheckBoxOption(ModConfig.DisableMod));
             ModSettingsManager.AddOption(new CheckBoxOption(ModConfig.DisableInSingle, new CheckBoxConfig { checkIfDisabled = CheckMod }));
             ModSettingsManager.AddOption(new CheckBoxOption(ModConfig.RoundDownItems, new CheckBoxConfig { checkIfDisabled = CheckMod }));
-            ModSettingsManager.AddOption(new CheckBoxOption(ModConfig.LunarIntoInventory, new CheckBoxConfig { checkIfDisabled = Check }));
-            ModSettingsManager.AddOption(new CheckBoxOption(ModConfig.DropRedItems, new CheckBoxConfig { checkIfDisabled = Check }));
-            ModSettingsManager.AddOption(new CheckBoxOption(ModConfig.DelayedDrop, new CheckBoxConfig { checkIfDisabled = CheckMod }));
-            ModSettingsManager.AddOption(new StepSliderOption(ModConfig.DelayLength, new StepSliderConfig{ min = 0, max = 1, increment = (float)0.05, checkIfDisabled = CheckMod }));
 
-            ModSettingsManager.SetModDescription("No more stealing boss loot.");
+            ModSettingsManager.AddOption(new CheckBoxOption(ModConfig.DisableLII, new CheckBoxConfig { checkIfDisabled = CheckDrop }));
+            ModSettingsManager.AddOption(new CheckBoxOption(ModConfig.LunarIntoInventory, new CheckBoxConfig { checkIfDisabled = CheckDrop }));
+            ModSettingsManager.AddOption(new CheckBoxOption(ModConfig.DropRedItems, new CheckBoxConfig { checkIfDisabled = CheckDrop }));
+
+            ModSettingsManager.AddOption(new CheckBoxOption(ModConfig.DelayedDrop, new CheckBoxConfig { checkIfDisabled = CheckLII }));
+            ModSettingsManager.AddOption(new StepSliderOption(ModConfig.DelayLength, new StepSliderConfig{ min = 0, max = 1, increment = (float)0.05, checkIfDisabled = CheckLII }));
+
+            ModSettingsManager.SetModDescription("Enhanced way of getting boss loot.");
         }
 
-        private static bool Check()
+        private static bool CheckDrop()
         {
             return ModConfig.DisableMod.Value || ModConfig.DelayedDrop.Value;
         }
         private static bool CheckMod()
         {
             return ModConfig.DisableMod.Value;
+        }
+        private static bool CheckLII()
+        {
+            return ModConfig.DisableMod.Value || ModConfig.DisableLII.Value;
         }
     }
 }
