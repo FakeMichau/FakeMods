@@ -1,6 +1,5 @@
 ﻿using BepInEx.Bootstrap;
 using RiskOfOptions;
-using RiskOfOptions.OptionConfigs;
 using RiskOfOptions.Options;
 
 namespace FuckBossShrines

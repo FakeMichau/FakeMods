@@ -1,7 +1,6 @@
 ﻿using BepInEx;
 using R2API.Utils;
 using RoR2;
-using UnityEngine;
 
 namespace FuckBossShrines
 {
@@ -19,7 +18,7 @@ namespace FuckBossShrines
         public void Awake()
         {
             ModConfig.InitConfig(Config);
-            On.RoR2.Stage.Start += Stage_Start;
+            On.RoR2.TeleporterInteraction.AddShrineStack += TeleporterInteraction_AddShrineStack;
 
             if (RiskOfOptionsCompat.Enabled)
             {
@@ -27,9 +26,9 @@ namespace FuckBossShrines
             }
         }
 
-        private void Stage_Start(On.RoR2.Stage.orig_Start orig, Stage self)
+        private void TeleporterInteraction_AddShrineStack(On.RoR2.TeleporterInteraction.orig_AddShrineStack orig, TeleporterInteraction self)
         {
-            orig(self);
+            if (!ModConfig.DisableShrines.Value) orig(self);
         }
     }
 }

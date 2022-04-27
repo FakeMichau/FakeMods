@@ -7,6 +7,6 @@ internal class ModConfig
 
     public static void InitConfig(ConfigFile config)
     {
-        DisableShrines = config.Bind("Settings", "Disable Shrines", defaultValue: false, "");
+        DisableShrines = config.Bind("Settings", "Disable Shrines", defaultValue: true, "");
     }
 }

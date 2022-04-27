@@ -23,6 +23,6 @@ internal class ModConfig
         LunarIntoInventory = config.Bind("Loot into inventory", "Lunar items into inventory", defaultValue: false, "Should boss loot changed into lunar items via Eulogy Zero go into inventory. \n(otherwise they will drop on the ground in front of a player that rolled it)");
         DropRedItems = config.Bind("Loot into inventory", "Drop red boss items on the ground", defaultValue: false, "Applies to Siren's Call where you destroy eggs to spawn a boss that drops red items.");
         
-        DelayLength = config.Bind("Delayed drop", "Delay between items dropping", defaultValue: (float)0.2, "How much time passes between each item starting to drop.\n\"Delay dropping items on the ground\" has to be enabled");
+        DelayLength = config.Bind("Delayed drop", "Delay between items dropping", defaultValue: (float)0.2, "How much time passes between each item starting to drop.");
     }
 }

@@ -1,12 +1,9 @@
 ﻿{
-	"ManifestVersion": 2,
-	"Name": "FakeMichau-BetterBossLootDropping",
-	"DisplayName": "BetterBossLootDropping",
-	"Version": "1.0.0",
-	"AuthorName": "FakeMichau",
-	"WebsiteURL": "",
-	"Description": "No more stealing boss loot",
-	"Dependencies": [
+	"name": "BetterBossLootDropping",
+	"version_number": "1.0.0",
+	"website_url": "",
+	"description": "Don't like people stealing your boss loot?\nYou'd like your boss loot to drop in the same as items from Scav bag do?\nWorks with RiskOfOptions, recommend installing it.",
+	"dependencies": [
 		"bbepis-BepInExPack-5.4.9",
 		"tristanmcpherson-R2API-4.0.11"
 	]
