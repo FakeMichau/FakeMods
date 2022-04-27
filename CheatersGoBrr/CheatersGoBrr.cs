@@ -66,7 +66,6 @@ namespace CheatersGoBrr
                 {
                     Utils.SendMessage(ModConfig.RALMessage.Value, "#ffc0cb");
                     count = self.netLunarCoins;
-                    self.CallCmdSendConsoleCommand("say", new []{"I'm a cheater"});
                 }
                 else 
                 {
