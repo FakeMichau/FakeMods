@@ -28,6 +28,7 @@ namespace CheatersGoBrr
             ModSettingsManager.AddOption(new CheckBoxOption(ModConfig.PreventStealingLunars));
             ModSettingsManager.AddOption(new StringInputFieldOption(ModConfig.PSLMessage));
             ModSettingsManager.AddOption(new StringInputFieldOption(ModConfig.RALMessage));
+            ModSettingsManager.AddOption(new StringInputFieldOption(ModConfig.OnEntryMessage));
 
             ModSettingsManager.SetModDescription("We hate cheaters.");
         }

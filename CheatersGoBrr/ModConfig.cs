@@ -12,6 +12,7 @@ internal class ModConfig
     public static ConfigEntry<string> PSLMessage;
     public static ConfigEntry<string> RALMessage;
     public static ConfigEntry<string> WarningMessage;
+    public static ConfigEntry<string> OnEntryMessage;
 
     public static void InitConfig(ConfigFile config)
     {
@@ -23,6 +24,7 @@ internal class ModConfig
         RALMessage = config.Bind("Effects", "RAL Message", defaultValue: "YOINK!", "Optional message when taking player's all lunars.\nEmpty to disable the message.");
         GiveTonicAffliction = config.Bind("Effects", "Give Tonic Affliction", defaultValue: false, "Activates whenever a player tries to spend their lunars.");
         PreventStealingLunars = config.Bind("Effects", "Prevent Stealing Lunars", defaultValue: true, "Prevents a player from picking up a lunar coin.");
-        PSLMessage = config.Bind("Effects", "PSL Message", defaultValue: "You greedy FUCK!", "Optional message when trying to pick up a lunar.\n\"Prevent Stealing Lunars\" has to be enabled. Empty to disable the message.");
+        PSLMessage = config.Bind("Effects", "PSL Message", defaultValue: "You greedy FUCK!", "Optional message when trying to pick up a lunar.\n\"Prevent Stealing Lunars\" has to be enabled.\nEmpty to disable the message.");
+        OnEntryMessage = config.Bind("Effects", "On Entry Message", defaultValue: "Don't spend too much or you will be punished", "Optional message when entering the bazaar.\nEmpty to disable the message.");
     }
 }

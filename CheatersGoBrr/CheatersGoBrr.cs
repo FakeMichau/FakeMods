@@ -20,6 +20,7 @@ namespace CheatersGoBrr
             ModConfig.InitConfig(Config);
             On.RoR2.NetworkUser.DeductLunarCoins += NetworkUser_DeductLunarCoins;
             On.RoR2.LunarCoinDef.GrantPickup += LunarCoinDef_GrantPickup;
+            On.EntityStates.NewtMonster.SpawnState.OnEnter += SpawnState_OnEnter;
 
             if (RiskOfOptionsCompat.Enabled)
             {
@@ -27,6 +28,11 @@ namespace CheatersGoBrr
             }
         }
 
+        private void SpawnState_OnEnter(On.EntityStates.NewtMonster.SpawnState.orig_OnEnter orig, EntityStates.NewtMonster.SpawnState self)
+        {
+            orig(self);
+            Utils.SendMessage(ModConfig.OnEntryMessage.Value, "#4f8aff");
+        }
         private void LunarCoinDef_GrantPickup(On.RoR2.LunarCoinDef.orig_GrantPickup orig, LunarCoinDef self, ref PickupDef.GrantContext context)
         {
             NetworkUser networkUser = Util.LookUpBodyNetworkUser(context.body);
